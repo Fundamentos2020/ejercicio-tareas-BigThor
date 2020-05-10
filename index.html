@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ejercicio tareas (consulta)</title>
+    <meta name="tareas" content='<?php echo $tareas; ?>' />
+    <meta name="categorias" content='<?php echo $categorias; ?>' />
+    <link rel="stylesheet" href="style.css" type="text/css"/>
+</head>
+<body>
+    <nav class="text-center text-white back-cornflowerblue p-2">
+        <h1>Lista tareas</h1>
+    </nav>
+    <div class="container">
+        <div class="row">
+            <div class="col-s-12 my-2">
+                <form method="GET" id='categoria-form'>
+                    <label class="p-2" for="filtro-categoria" class="">Categoría: </label>
+                    <select class="pos-absolute" name="categoria_id" id="filtro-categoria"
+                            onfocus='this.size=4;' 
+                            onblur='this.size=1;' 
+                            onchange='this.size=1; this.blur(); this.form.submit();'
+                    >
+                        <option value="">Todas</option>
+                    </select>
+                </form>
+            </div>
+        </div>
+
+        <div class="row">
+            <div id="contenedor-tareas">
+                
+            </div>
+        </div>
+
+    </div>
+    <footer class="back-cornflowerblue text-white text-center py-2">
+        Suárez Ruiz Víctor Adrián - 229520
+    </footer>
+
+    <script src="app.js"></script>
+</body>
+</html>
