@@ -1,0 +1,9 @@
+php_flag display_errors on
+
+RewriteEngine on
+
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_FILENAME} !-f
+
+#Categoria
+RewriteRule ^categorias$ Controllers/categoriasController.php [L]

@@ -4,8 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ejercicio tareas (consulta)</title>
-    <meta name="tareas" content='<?php echo $tareas; ?>' />
-    <meta name="categorias" content='<?php echo $categorias; ?>' />
     <link rel="stylesheet" href="style.css" type="text/css"/>
 </head>
 <body>
@@ -20,9 +18,9 @@
                     <select class="pos-absolute" name="categoria_id" id="filtro-categoria"
                             onfocus='this.size=4;' 
                             onblur='this.size=1;' 
-                            onchange='this.size=1; this.blur(); this.form.submit();'
+                            onchange='this.size=1; this.blur(); cargarTareas();'
                     >
-                        <option value="">Todas</option>
+                        <option value="-1">Todas</option>
                     </select>
                 </form>
             </div>

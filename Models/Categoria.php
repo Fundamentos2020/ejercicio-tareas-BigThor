@@ -1,38 +1,39 @@
 <?php
-include_once 'DB.php';
 
-class CategoriaModelo
+class Categoria
 {
-    protected $_db;
+    private $_id;
+    private $_nombre;
 
-    public function __construct()
+    public function __construct($id, $nombre)
     {
-        $this->_db = Db::init();
+        $this->setId($id);
+        $this->setNombre($nombre);
     }
 
-    public function obtenerCategorias($data = null)
-    {
-        $sql = "SELECT * FROM categorias";
-        $sth = $this->_db->prepare($sql);
-        $sth->execute($data);
-
-        $categorias = array();
-        while($row = $sth->fetch(PDO::FETCH_ASSOC)){
-            $categorias[$row['id']] = $row;
-        }
-
-        return $categorias;
+    public function getId() {
+        return $this->_id;
     }
 
-    public function obtenerCategoriaPorId($id_categoria = null)
-    {
-        $sql = "SELECT * FROM categorias WHERE id :id";
+    public function getNombre() {
+        return $this->_nombre;
+    }
 
-        $sth = $this->_db->prepare($sql);
-        $sth->bindParam(':id', $id_categoria, PDO::PARAM_INT);
+    public function setId($id) {
+        $this->_id = $id;
+    }
 
-        $sth->execute($data);
-        return $sth->fetch();
+    public function setNombre($nombre) {
+        $this->_nombre = $nombre;
+    }
+
+    public function getArray() {
+        $categoria = array();
+
+        $categoria['id'] = $this->getId();
+        $categoria['nombre'] = $this->getNombre();
+
+        return $categoria;
     }
 }
 

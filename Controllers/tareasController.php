@@ -1,33 +1,47 @@
 <?php
-include_once dirname(__DIR__) . '/Models/Tarea.php';
-include_once dirname(__DIR__) . '/Models/Categoria.php';
-include_once dirname(__DIR__) . '/view.php';
+require_once('../Models/Tarea.php');
+require_once('../Models/DB.php');
+require_once('../Models/Response.php');
 
-class TareasController
-{
-    protected $_modeloTareas;
-    protected $_vista;
 
-    public function __construct()
-    {
-        $this->_modeloTareas = new TareaModelo();
-        $this->_vista = new View(dirname(__DIR__).'/index.html');
-        $modeloCategorias = new CategoriaModelo();
-        $categorias = $modeloCategorias->obtenerCategorias();
-        $this->_vista->set('categorias', json_encode( $categorias ));
+try {
+    $connection = DB::init();
+    $sql = "SELECT * FROM tareas";
+
+    // Se filtran por categoria
+    if(isset($_GET['categoria_id'])){
+        $sql = $sql . ' WHERE categoria_id = :categoria_id';
     }
 
-    public function index(){
-        $tareas = $this->_modeloTareas->obtenerTareas();
-        $this->_vista->set('tareas', json_encode( $tareas ));
-        return $this->_vista->output();
+    $query = $connection->prepare($sql);
+
+    if(isset($_GET['categoria_id'])){
+        $query->bindParam(':categoria_id', $_GET['categoria_id'], PDO::PARAM_INT);
     }
 
-    public function filtradasPorCategoria($categoria_id){
-        $tareas = $this->_modeloTareas->obtenerTareasPorCategoria($categoria_id);
-        $this->_vista->set('tareas', json_encode( $tareas ));
-        return $this->_vista->output();
+    $query->execute();
+
+    $tareas = array();
+    while($row = $query->fetch(PDO::FETCH_ASSOC)){
+        $tarea = new Tarea($row['id'], $row['titulo'], $row['descripcion'], $row['fecha_limite'], $row['completada'], $row['categoria_id'] );
+
+        $tareas[] = $tarea->getArray();
     }
+
+    $response = new Response();
+    $response->setHttpStatusCode(200);
+    $response->setSuccess(true);
+    $response->setData($tareas);
+    $response->send();
+    exit();
+}
+catch(PDOException $e){
+    $response = new Response();
+    $response->setHttpStatusCode(500);
+    $response->setSuccess(false);
+    $response->addMessage("Algo falló");
+    $response->send();
+    exit();
 }
 
 ?>
