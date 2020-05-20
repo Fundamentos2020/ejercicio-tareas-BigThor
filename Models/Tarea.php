@@ -62,25 +62,28 @@ class Tarea
     }
 
     public function setDescripcion($descripcion) {
-        if($descripcion === null || strlen($descripcion) > 150) {
+        if($descripcion !== null && strlen($descripcion) > 150) {
             throw new TareaException("Error en descripción de tarea");
         }
         $this->_descripcion = $descripcion;
     }
 
     public function setFechaLimite($fecha_limite) {
+        if($fecha_limite !== null && (date_format(date_create_from_format('Y-m-d H:i', $fecha_limite), 'Y-m-d H:i') !== $fecha_limite ) ) {
+            throw new TareaException("Error en descripción de tarea");
+        }
         $this->_fecha_limite = $fecha_limite;
     }
 
     public function setCompletada($completada) {
-        if($descripcion === null || !(strtoupper($completada) === 'NO' || strtoupper($completada) === 'SI')) {
+        if($completada === null || !(strtoupper($completada) === 'NO' || strtoupper($completada) === 'SI')) {
             throw new TareaException("Error en campo completada de tarea");
         }
         $this->_completada = $completada;
     }
 
     public function setCategoriaId($categoria_id) {
-        if($categoria_id === null || !is_numeric($categoria_id) || !is_integer($id) || $id <= 0 ||  $id >= 2137483647){
+        if($categoria_id === null || !is_numeric($categoria_id) || !is_integer($categoria_id) || $categoria_id <= 0 ||  $categoria_id >= 2137483647){
             throw new TareaException("Error en el ID categoria de tarea");
         }
         $this->_categoria_id = $categoria_id;

@@ -7,3 +7,8 @@ RewriteCond %{REQUEST_FILENAME} !-f
 
 #Categoria
 RewriteRule ^categorias$ Controllers/categoriasController.php [L]
+
+#Tareas
+RewriteRule ^tareas$ Controllers/tareasController.php [L]
+RewriteRule ^tareas?categoria_id=([0-9]+)$ Controllers/tareasController.php?categoria_id=$1 [L]
+RewriteRule ^tareas/categoria_id=(.*)$ Controllers/tareasController.php?categoria_id=$1 [L]

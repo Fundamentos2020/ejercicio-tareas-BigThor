@@ -24,10 +24,7 @@ if(empty($_GET)){
         $query->execute();
 
         $categorias = array();
-        /*
-        while($row = $sth->fetch(PDO::FETCH_ASSOC)){
-            $categorias[$row['id']] = $row;
-        }*/
+        
         while($row = $query->fetch(PDO::FETCH_ASSOC)){
             $categoria = new Categoria($row['id'], $row['nombre']);
 
