@@ -47,7 +47,7 @@ class Tarea
     }
 
     public function setId($id) {
-        if($id === null || !is_numeric($id) || !is_integer($id) || $id <= 0 ||  $id >= 2137483647 || $this->_id !== null ){
+        if($id !== null && (!is_numeric($id) || !is_integer($id) || $id <= 0 ||  $id >= 2137483647 || $this->_id !== null )){
             throw new TareaException("Error en ID de tarea");
         }
         
