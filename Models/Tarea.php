@@ -69,8 +69,8 @@ class Tarea
     }
 
     public function setFechaLimite($fecha_limite) {
-        if($fecha_limite !== null && (date_format(date_create_from_format('Y-m-d H:i', $fecha_limite), 'Y-m-d H:i') !== $fecha_limite ) ) {
-            throw new TareaException("Error en descripción de tarea");
+        if($fecha_limite !== null && (date_format(date_create_from_format('Y-m-d H:i', $fecha_limite), 'Y-m-d H:i') != $fecha_limite ) ) {
+            throw new TareaException("Error en la fecha de la tarea");
         }
         $this->_fecha_limite = $fecha_limite;
     }
